@@ -1,29 +1,51 @@
-//  Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import { extractSheets } from 'spreadsheet-to-json'
 import type { NextApiRequest, NextApiResponse } from 'next'
-
-// interface Data extends GaxiosResponse{
-//   name: string
-// }
+import { google } from 'googleapis'
+import { uuid } from 'uuidv4'
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
+  switch (req.method) {
+    case 'POST':
+      const id = uuid()
+      const { Name, Description, Price, Image } = req.body
+      const auth = new google.auth.GoogleAuth({
+        keyFile: 'credentials.json',
+        scopes: 'https://www.googleapis.com/auth/spreadsheets',
+      })
+      const client = await auth.getClient()
+
+      const googleSheets = google.sheets({ version: 'v4', auth: client })
+      const spreadsheetId = process.env.SHEETS_ID
+
+      const metaData = await googleSheets.spreadsheets.get({
+        auth,
+        spreadsheetId,
+      })
+
+      googleSheets.spreadsheets.values.append({
+        auth,
+        spreadsheetId,
+        range: 'Product!A1:E1',
+        valueInputOption: 'USER_ENTERED',
+        requestBody: { values: [[id, Name, Description, Price, Image]] },
+      })
+      break
+  }
+
   extractSheets(
     {
-      // your google spreadhsheet key
-      spreadsheetKey: '12ozPThNSYrW6D16tg0zabyZqEsRT7y4XjB5nsJkHNmM',
-      // your google oauth2 credentials or API_KEY
+      spreadsheetKey: process.env.SHEETS_ID,
+
       credentials: require('../../credentials.json'),
-      // optional: names of the sheets you want to extract
+
       sheetsToExtract: ['Product'],
-      // optional: custom function to parse the cells
-      //formatCell: formatCell
     },
     function (err: any, data: any) {
       console.log('Product: ', data.Product)
-      res.send(data.Product)
+      res.send(data)
     }
   )
 }
