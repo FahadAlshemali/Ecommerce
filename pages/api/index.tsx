@@ -28,24 +28,25 @@ export default async function handler(
       googleSheets.spreadsheets.values.append({
         auth,
         spreadsheetId,
-        range: 'Product!A1:E1',
+        range: 'Product!A1:H1',
         valueInputOption: 'USER_ENTERED',
         requestBody: { values: [[id, Name, Description, Price, Image]] },
       })
       break
   }
 
-  extractSheets(
-    {
-      spreadsheetKey: process.env.SHEETS_ID,
+//   extractSheets(
+//     {
+//       spreadsheetKey: process.env.SHEETS_ID,
 
-      credentials: require('../../credentials.json'),
+//       credentials: require('../../credentials.json'),
 
-      sheetsToExtract: ['Product'],
-    },
-    function (err: any, data: any) {
-      console.log('Product: ', data.Product)
-      res.send(data)
-    }
-  )
+//       sheetsToExtract: ['Product'],
+//     },
+//     function (err: any, data: any) {
+//       console.log('Product: ', data.Product)
+//       res.send(data)
+//     }
+//   )
+// 
 }

@@ -4,9 +4,11 @@ export interface Product {
   href: string
   color: string
   price: string
+  description?:string
   availableQty: number
   imageSrc: string
   imageAlt: string
+  categories:string
 }
 
 export interface CartItem extends Product {

@@ -90,6 +90,7 @@ const perks = [
 ]
 
 const Home: NextPage = () => {
+
   return (
     <div className="">
       <Layout>
