@@ -3,7 +3,7 @@ import Layout from 'components/layout'
 import { classNames } from 'lib'
 import { useState } from 'react'
 
-const product = {
+const testtest = {
   name: 'Basic Tee 6-Pack',
   price: '$192',
   href: '#',
@@ -91,10 +91,10 @@ const reviews = {
   ],
 }
 
-export default function ProductPage() {
+export default function ProductPage({ product }: any) {
   const [open, setOpen] = useState(false)
-  const [selectedColor, setSelectedColor] = useState(product.colors[0])
-  const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+  // const [selectedColor, setSelectedColor] = useState(product.colors[0])
+  // const [selectedSize, setSelectedSize] = useState(product.sizes[2])
 
   return (
     <Layout>
@@ -103,12 +103,12 @@ export default function ProductPage() {
         <div className="mx-auto mt-6 max-w-2xl sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:gap-x-8 lg:px-8">
           <div className="aspect-w-3 aspect-h-4 hidden overflow-hidden rounded-lg lg:block">
             <img
-              src={product.images[0].src}
-              alt={product.images[0].alt}
+              src={product.imageSrc}
+              alt={product.imageSrc}
               className="h-full w-full object-cover object-center"
             />
           </div>
-          <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
+          {/* <div className="hidden lg:grid lg:grid-cols-1 lg:gap-y-8">
             <div className="aspect-w-3 aspect-h-2 overflow-hidden rounded-lg">
               <img
                 src={product.images[1].src}
@@ -130,7 +130,7 @@ export default function ProductPage() {
               alt={product.images[3].alt}
               className="h-full w-full object-cover object-center"
             />
-          </div>
+          </div> */}
         </div>
 
         {/* Product info */}
@@ -169,8 +169,6 @@ export default function ProductPage() {
             </div>
 
             <form className="mt-10">
-              
-
               <button
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
@@ -195,11 +193,11 @@ export default function ProductPage() {
 
               <div className="mt-4">
                 <ul role="list" className="list-disc space-y-2 pl-4 text-sm">
-                  {product.highlights.map((highlight) => (
+                  {/* {product.highlights.map((highlight) => (
                     <li key={highlight} className="text-gray-400">
                       <span className="text-gray-600">{highlight}</span>
                     </li>
-                  ))}
+                  ))} */}
                 </ul>
               </div>
             </div>
@@ -212,9 +210,9 @@ export default function ProductPage() {
                 Details
               </h2>
 
-              <div className="mt-4 space-y-6">
+              {/* <div className="mt-4 space-y-6">
                 <p className="text-sm text-gray-600">{product.details}</p>
-              </div>
+              </div> */}
             </section>
           </div>
 
@@ -279,4 +277,31 @@ export default function ProductPage() {
       </main>
     </Layout>
   )
+}
+
+export const getStaticPaths = async () => {
+  const res = await fetch(`http://localhost:3000/api/getProduct`)
+  const data = await res.json()
+  console.log(data)
+  const paths = data.map((product: any) => {
+    return {
+      params: {
+        id: product.id,
+      },
+    }
+  }) 
+  return {
+    paths,
+    fallback: false,
+  }
+}
+
+export const getStaticProps = async (context: any) => {
+  console.log(context.params)
+  const res = await fetch(`http://localhost:3000/api/${context.params.id}`)
+  const data = await res.json()
+  return {
+    props: {product:data}
+  }
+  
 }
