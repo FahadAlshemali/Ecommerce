@@ -1,6 +1,12 @@
 import type { NextPage } from 'next'
 import Layout from 'components/layout'
-
+import { useAppDispatch, useAppSelector } from 'redux/hooks'
+import { useEffect } from 'react'
+import { getAllProducts } from 'redux/productSlice'
+import { Dispatch } from 'redux'
+import axios from 'axios'
+import { Product } from 'types'
+import Link from 'next/link'
 
 const collections = [
   {
@@ -26,38 +32,19 @@ const collections = [
       'Person sitting at a wooden desk with paper note organizer, pencil and tablet.',
   },
 ]
-const trendingProducts = [
-  {
-    id: 1,
-    name: 'Leather Long Wallet',
-    color: 'Natural',
-    price: '$75',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg',
-    imageAlt: 'Hand stitched, orange leather long wallet.',
-  },
-  {
-    id: 1,
-    name: 'Leather Long Wallet',
-    color: 'Natural',
-    price: '$75',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg',
-    imageAlt: 'Hand stitched, orange leather long wallet.',
-  },
-  {
-    id: 1,
-    name: 'Leather Long Wallet',
-    color: 'Natural',
-    price: '$75',
-    href: '#',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg',
-    imageAlt: 'Hand stitched, orange leather long wallet.',
-  }
-]
+// const trendingProducts = [
+
+//   {
+//     id: 1,
+//     name: 'Leather Long Wallet',
+//     color: 'Natural',
+//     price: '$75',
+//     href: '#',
+//     imageSrc:
+//       'https://tailwindui.com/img/ecommerce-images/home-page-04-trending-product-02.jpg',
+//     imageAlt: 'Hand stitched, orange leather long wallet.',
+//   }
+// ]
 const perks = [
   {
     name: 'Free returns',
@@ -89,7 +76,20 @@ const perks = [
   },
 ]
 
-const Home: NextPage = () => {
+const Home = ({ products }: { products: Product[] }) => {
+  // const API = axios.create({ baseURL: 'http://localhost:3000/api/' })
+
+  const dispatch = useAppDispatch()
+  const getProducts = async () => {
+    const res = await axios.get('http://localhost:3000/api/getProduct')
+    const productData = await res.data
+    dispatch(getAllProducts(productData))
+  }
+  // const products = useAppSelector((state)=> state.product)
+  console.log(products)
+  useEffect(() => {
+    getProducts()
+  }, [])
 
   return (
     <div className="">
@@ -213,8 +213,10 @@ const Home: NextPage = () => {
               </div>
 
               <div className="mt-6 grid grid-cols-2 gap-x-4 gap-y-10 sm:gap-x-6 md:grid-cols-4 md:gap-y-0 lg:gap-x-8">
-                {trendingProducts.map((product) => (
-                  <div key={product.id} className="group relative">
+                {products.map((product) => (
+                  <Link href={`/product/${product.id}`}>
+                   
+                    <div key={product.id} className="group relative">
                     <div className="h-56 w-full overflow-hidden rounded-md group-hover:opacity-75 lg:h-72 xl:h-80">
                       <img
                         src={product.imageSrc}
@@ -235,6 +237,9 @@ const Home: NextPage = () => {
                       {product.price}
                     </p>
                   </div>
+                    
+                  </Link>
+                  
                 ))}
               </div>
 
@@ -293,3 +298,9 @@ const Home: NextPage = () => {
 }
 
 export default Home
+export const getStaticProps = async () => {
+  const res = await fetch('http://localhost:3000/api/getProduct')
+  const data = await res.json()
+
+  return { props: { products: data } }
+}

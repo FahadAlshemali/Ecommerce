@@ -19,6 +19,7 @@ const navigation: Navigation = {
           color: 'Salmon',
           price: '$90.00',
           availableQty: 4,
+          categories:"123123"
         },
         {
           name: 'Basic Tees',
@@ -31,6 +32,7 @@ const navigation: Navigation = {
           price: '$90.00',
           availableQty: 4,
           id: 2,
+          categories:"123123"
         },
       ],
     },
@@ -48,6 +50,7 @@ const navigation: Navigation = {
           price: '$90.00',
           availableQty: 4,
           id: 2,
+          categories:"123123"
         },
         {
           name: 'Basic Tees',
@@ -59,6 +62,7 @@ const navigation: Navigation = {
           price: '$90.00',
           availableQty: 4,
           id: 3,
+          categories:"123123"
         },
         {
           name: 'Accessories',
@@ -71,6 +75,7 @@ const navigation: Navigation = {
           price: '$90.00',
           availableQty: 4,
           id: 5,
+          categories:"123123"
         },
         {
           name: 'Carry',
@@ -82,6 +87,7 @@ const navigation: Navigation = {
           color: 'Salmon',
           price: '$90.00',
           availableQty: 4,
+          categories:"123123",
           id: 8,
         },
       ],
@@ -160,7 +166,7 @@ function Drawer({ open, setOpen }: props) {
                     >
                       <div className="grid grid-cols-2 gap-x-4 gap-y-10">
                         {category.featured.map((item) => (
-                          <div key={item.name} className="group relative">
+                          <div key={item.id} className="group relative">
                             <div className="aspect-w-1 aspect-h-1 overflow-hidden rounded-md bg-gray-100 group-hover:opacity-75">
                               <img
                                 src={item.imageSrc}
