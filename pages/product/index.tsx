@@ -1,12 +1,12 @@
 import React from 'react'
 import { Product } from 'types'
-import { getAllItem } from 'pages/redux/productSlice'
-import { useAppDispatch } from 'pages/redux/hooks'
+import { getAllProducts } from 'redux/productSlice'
+import { useAppDispatch } from 'redux/hooks'
 
 const Products = ({ products }: any) => {
     const dispatch = useAppDispatch()
     console.log(Products)
-    dispatch(getAllItem(products))
+    dispatch(getAllProducts(products))
   return (
     <div className="mt-8 grid grid-cols-1 gap-y-12 sm:grid-cols-2 sm:gap-x-6 lg:grid-cols-4 xl:gap-x-8">
     {products.map((product:any) => (
