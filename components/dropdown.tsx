@@ -1,6 +1,7 @@
 import React from 'react'
 
 type props = {
+ 
   values: string[] | number[]
   defaultValue?: string | number
   onChange: (value: string) => void

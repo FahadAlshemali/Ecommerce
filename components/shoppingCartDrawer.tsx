@@ -1,11 +1,12 @@
 /* This example requires Tailwind CSS v2.0+ */
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
-import { Fragment } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/hooks'
 import { CartItem, Product } from 'types'
 import Dropdown from './dropdown'
-import { addItemsToCart, removeItems } from '../redux/cartSlice'
+import { addItemsToCart, removeItem } from '../redux/cartSlice'
+import Link from 'next/link'
 
 type props = {
   open: boolean
@@ -15,7 +16,14 @@ type props = {
 export default function ShoppingCartDrawer({ open, setOpen }: props) {
   const dispatch = useAppDispatch()
   const getProduct = useAppSelector((state) => state.cart)
+  const [total, setTotal] = useState<number>(0)
 
+  useEffect(() => {
+    setTotal(0)
+    getProduct.forEach((product) => {
+      setTotal((prevTotal) => (prevTotal += product.price * product.quantity))
+    })
+  }, [getProduct])
   console.log(getProduct)
   return (
     <Transition.Root show={open} as={Fragment}>
@@ -89,7 +97,7 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                                           {product.name}{' '}
                                         </a>
                                       </h3>
-                                      <p className="ml-4">{product.price}</p>
+                                      <p className="ml-4">${product.price}</p>
                                     </div>
                                     <p className="mt-1 text-sm text-gray-500">
                                       {product.color}
@@ -99,7 +107,6 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                                     <p className="text-gray-500">
                                       <Dropdown
                                         onChange={(value) => {
-                                          console.log(value)
                                           dispatch(
                                             addItemsToCart({
                                               ...product,
@@ -119,7 +126,7 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
                                         onClick={() => {
-                                          dispatch(removeItems(product.id))
+                                          dispatch(removeItem(product.id))
                                         }}
                                       >
                                         Remove
@@ -137,18 +144,17 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>$262.00</p>
+                        <p>{total}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.
                       </p>
                       <div className="mt-6">
-                        <a
-                          href="/checkout"
-                          className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
-                        >
-                          Checkout
-                        </a>
+                        <Link href="/checkout">
+                          <a className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700">
+                            Checkout
+                          </a>
+                        </Link>
                       </div>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <p>

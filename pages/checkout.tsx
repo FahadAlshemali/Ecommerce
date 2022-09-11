@@ -4,34 +4,35 @@ import Dropdown from 'components/dropdown'
 import Layout from 'components/layout'
 import { classNames } from 'lib'
 import { useState } from 'react'
+import { useAppDispatch, useAppSelector } from 'redux/hooks'
 
-const products = [
-  {
-    id: 1,
-    title: 'Basic Tee',
-    href: '#',
-    price: '$32.00',
-    color: 'Black',
-    size: 'Large',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    availableQty: 10,
-  },
-  {
-    id: 2,
-    title: 'Emad Tee',
-    href: '#',
-    price: '$32.00',
-    color: 'Black',
-    size: 'Large',
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
-    imageAlt: "Front of men's Basic Tee in black.",
-    availableQty: 6,
-  },
-  // More products...
-]
+// const products = [
+//   {
+//     id: 1,
+//     title: 'Basic Tee',
+//     href: '#',
+//     price: '$32.00',
+//     color: 'Black',
+//     size: 'Large',
+//     imageSrc:
+//       'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
+//     imageAlt: "Front of men's Basic Tee in black.",
+//     availableQty: 10,
+//   },
+//   {
+//     id: 2,
+//     title: 'Emad Tee',
+//     href: '#',
+//     price: '$32.00',
+//     color: 'Black',
+//     size: 'Large',
+//     imageSrc:
+//       'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
+//     imageAlt: "Front of men's Basic Tee in black.",
+//     availableQty: 6,
+//   },
+//   // More products...
+// ]
 const deliveryMethods = [
   {
     id: 1,
@@ -52,6 +53,9 @@ export default function Example() {
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(
     deliveryMethods[0]
   )
+  const dispatch = useAppDispatch()
+  const getProduct = useAppSelector((state) => state.cart)
+  console.log('123123', getProduct)
 
   return (
     <Layout>
@@ -472,7 +476,7 @@ export default function Example() {
                 <div className="mt-4 rounded-lg border border-gray-200 bg-white shadow-sm">
                   <h3 className="sr-only">Items in your cart</h3>
                   <ul role="list" className="divide-y divide-gray-200">
-                    {products.map((product) => (
+                    {getProduct.map((product) => (
                       <li key={product.id} className="flex py-6 px-4 sm:px-6">
                         <div className="flex-shrink-0">
                           <img
@@ -486,19 +490,19 @@ export default function Example() {
                           <div className="flex">
                             <div className="min-w-0 flex-1">
                               <h4 className="text-sm">
-                                <a
+                                {/* <a
                                   href={product.href}
                                   className="font-medium text-gray-700 hover:text-gray-800"
                                 >
                                   {product.title}
-                                </a>
+                                </a> */}
                               </h4>
                               <p className="mt-1 text-sm text-gray-500">
                                 {product.color}
                               </p>
-                              <p className="mt-1 text-sm text-gray-500">
+                              {/* <p className="mt-1 text-sm text-gray-500">
                                 {product.size}
-                              </p>
+                              </p> */}
                             </div>
 
                             <div className="ml-4 flow-root flex-shrink-0">
@@ -525,6 +529,7 @@ export default function Example() {
                                 Quantity
                               </label>
                               <Dropdown
+                              
                                 onChange={(value) => {
                                   console.log('hello world' + value)
                                 }}
