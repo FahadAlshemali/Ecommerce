@@ -5,11 +5,7 @@ import { Fragment } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/hooks'
 import { CartItem, Product } from 'types'
 import Dropdown from './dropdown'
-import { addItemsToCart } from '../redux/cartSlice'
-
-// const cart: CartItem[] = [
-
-// ]
+import { addItemsToCart, removeItems } from '../redux/cartSlice'
 
 type props = {
   open: boolean
@@ -122,6 +118,9 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                                       <button
                                         type="button"
                                         className="font-medium text-indigo-600 hover:text-indigo-500"
+                                        onClick={() => {
+                                          dispatch(removeItems(product.id))
+                                        }}
                                       >
                                         Remove
                                       </button>
