@@ -2,6 +2,10 @@ import { StarIcon } from '@heroicons/react/solid'
 import Layout from 'components/layout'
 import { classNames } from 'lib'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useAppDispatch } from 'redux/hooks'
+import { Product, CartItem } from 'types'
+import { addItemsToCart } from 'redux/cartSlice'
 
 const testtest = {
   name: 'Basic Tee 6-Pack',
@@ -91,10 +95,30 @@ const reviews = {
   ],
 }
 
-export default function ProductPage({ product }: any) {
+export default function ProductPage({ product }: { product: Product }) {
   const [open, setOpen] = useState(false)
   // const [selectedColor, setSelectedColor] = useState(product.colors[0])
   // const [selectedSize, setSelectedSize] = useState(product.sizes[2])
+
+  const dispatch = useAppDispatch()
+  const addProductHandler = () => {
+    const productInfo = {
+      id: product.id,
+      name: product.name,
+      href: '',
+      color: product.color,
+      price: +product.price,
+       description:'',
+      availableQty: +product.availableQty,
+      imageSrc: product.imageSrc,
+      imageAlt: product.imageAlt,
+      categories: product.categories,
+      // ...product,
+      quantity:1,
+    }
+    dispatch(addItemsToCart(productInfo))
+  }
+  console.log(addProductHandler())
 
   return (
     <Layout>
@@ -170,6 +194,7 @@ export default function ProductPage({ product }: any) {
 
             <form className="mt-10">
               <button
+                onClick={() => addProductHandler()}
                 type="submit"
                 className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
               >
@@ -289,7 +314,7 @@ export const getStaticPaths = async () => {
         id: product.id,
       },
     }
-  }) 
+  })
   return {
     paths,
     fallback: false,
@@ -301,7 +326,6 @@ export const getStaticProps = async (context: any) => {
   const res = await fetch(`http://localhost:3000/api/${context.params.id}`)
   const data = await res.json()
   return {
-    props: {product:data}
+    props: { product: data },
   }
-  
 }

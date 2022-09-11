@@ -2,41 +2,14 @@
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { Fragment } from 'react'
+import { useAppDispatch, useAppSelector } from 'redux/hooks'
 import { CartItem, Product } from 'types'
 import Dropdown from './dropdown'
+import { addItemsToCart } from '../redux/cartSlice'
 
-const cart: CartItem[] = [
-  {
-    id: 1,
-    name: 'Throwback Hip Bag',
-    href: '#',
-    color: 'Salmon',
-    price: '$90.00',
-    quantity: 1,
-    availableQty: 4,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg',
-    imageAlt:
-      'Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.',
-      categories: "qweqew"
-  },
-  {
-    id: 2,
-    name: 'Medium Stuff Satchel',
-    href: '#',
-    color: 'Blue',
-    price: '$32.00',
-    quantity: 1,
-    availableQty: 4,
-    imageSrc:
-      'https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg',
-    imageAlt:
-      'Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.',
-      categories:"QWeqwewe"
-  },
+// const cart: CartItem[] = [
 
-  // More cart...
-]
+// ]
 
 type props = {
   open: boolean
@@ -44,6 +17,10 @@ type props = {
 }
 
 export default function ShoppingCartDrawer({ open, setOpen }: props) {
+  const dispatch = useAppDispatch()
+  const getProduct = useAppSelector((state) => state.cart)
+
+  console.log(getProduct)
   return (
     <Transition.Root show={open} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>
@@ -97,7 +74,7 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                             role="list"
                             className="-my-6 divide-y divide-gray-200"
                           >
-                            {cart.map((product) => (
+                            {getProduct.map((product) => (
                               <li key={product.id} className="flex py-6">
                                 <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                                   <img
@@ -125,8 +102,14 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <p className="text-gray-500">
                                       <Dropdown
-                                        onChange={() => {
-                                          console.log('hello world')
+                                        onChange={(value) => {
+                                          console.log(value)
+                                          dispatch(
+                                            addItemsToCart({
+                                              ...product,
+                                              quantity: +value,
+                                            })
+                                          )
                                         }}
                                         values={Array.from(
                                           Array(product.availableQty),
@@ -162,7 +145,7 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                       </p>
                       <div className="mt-6">
                         <a
-                          href="#"
+                          href="/checkout"
                           className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                         >
                           Checkout

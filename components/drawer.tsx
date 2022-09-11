@@ -17,7 +17,7 @@ const navigation: Navigation = {
           imageAlt:
             'Models sitting back to back, wearing Basic Tee in indigo and bone.',
           color: 'Salmon',
-          price: '$90.00',
+          price: 90,
           availableQty: 4,
           categories:"123123"
         },
@@ -29,7 +29,7 @@ const navigation: Navigation = {
           imageAlt:
             'Close up of Basic Tee fall bundle with off-white, ochre, olive, and indigo tees.',
           color: 'Salmon',
-          price: '$90.00',
+          price: 90,
           availableQty: 4,
           id: 2,
           categories:"123123"
@@ -47,7 +47,7 @@ const navigation: Navigation = {
           imageAlt:
             'Hats and sweaters on wood shelves next to various colors of t-shirts on hangers.',
           color: 'Salmon',
-          price: '$90.00',
+          price: 90,
           availableQty: 4,
           id: 2,
           categories:"123123"
@@ -59,7 +59,7 @@ const navigation: Navigation = {
             'https://tailwindui.com/img/ecommerce-images/mega-menu-01-men-category-02.jpg',
           imageAlt: 'Model wearing light heather indigo t-shirt.',
           color: 'Salmon',
-          price: '$90.00',
+          price: 90.00,
           availableQty: 4,
           id: 3,
           categories:"123123"
@@ -72,7 +72,7 @@ const navigation: Navigation = {
           imageAlt:
             'Grey 6-panel baseball hat with indigo brim, indigo mountain graphic on front, and light heather indigo body.',
           color: 'Salmon',
-          price: '$90.00',
+          price: 90,
           availableQty: 4,
           id: 5,
           categories:"123123"
@@ -85,7 +85,7 @@ const navigation: Navigation = {
           imageAlt:
             'Model putting folded cash into slim card holder olive leather wallet with hand stitching.',
           color: 'Salmon',
-          price: '$90.00',
+          price: 90,
           availableQty: 4,
           categories:"123123",
           id: 8,

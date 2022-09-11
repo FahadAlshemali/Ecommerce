@@ -1,24 +1,27 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { Product } from 'types'
+import { CartItem, Product } from 'types'
 
-const initialState: {
-  cartItems: Product[]
-  cartTotalQuantity: number
-  cartTotalAmount: number
-} = {
-  cartItems: [],
-  cartTotalQuantity: 0,
-  cartTotalAmount: 0,
-}
+const initialState: CartItem[] = []
+
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItemsToCart(state, action: PayloadAction<Product[]>) {
-      state.cartItems = action.payload
-    },
-    addProductToCart(state, action: PayloadAction<Product>) {
-      state.cartItems.push(action.payload)
+    addItemsToCart(state, action) {
+      const item = state.find(
+        (product: Product) => product.id === action.payload.id
+      )
+      if (item) {
+        return state.map((ele: CartItem) => {
+          if (item.id === action.payload.id) {
+            return { ...item, quantity: action.payload.quantity }
+          } else {
+            return item
+          }
+        })
+      } else {
+        return [...state, action.payload]
+      }
     },
   },
 })
