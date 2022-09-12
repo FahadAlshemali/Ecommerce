@@ -4,35 +4,11 @@ import Dropdown from 'components/dropdown'
 import Layout from 'components/layout'
 import { classNames } from 'lib'
 import { useState } from 'react'
+import { addItemsToCart, removeItem } from 'redux/cartSlice'
 import { useAppDispatch, useAppSelector } from 'redux/hooks'
+import { useFormik } from 'formik';
 
-// const products = [
-//   {
-//     id: 1,
-//     title: 'Basic Tee',
-//     href: '#',
-//     price: '$32.00',
-//     color: 'Black',
-//     size: 'Large',
-//     imageSrc:
-//       'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
-//     imageAlt: "Front of men's Basic Tee in black.",
-//     availableQty: 10,
-//   },
-//   {
-//     id: 2,
-//     title: 'Emad Tee',
-//     href: '#',
-//     price: '$32.00',
-//     color: 'Black',
-//     size: 'Large',
-//     imageSrc:
-//       'https://tailwindui.com/img/ecommerce-images/checkout-page-02-product-01.jpg',
-//     imageAlt: "Front of men's Basic Tee in black.",
-//     availableQty: 6,
-//   },
-//   // More products...
-// ]
+
 const deliveryMethods = [
   {
     id: 1,
@@ -47,7 +23,6 @@ const paymentMethods = [
   { id: 'paypal', title: 'PayPal' },
   { id: 'etransfer', title: 'eTransfer' },
 ]
-
 export default function Example() {
   const [open, setOpen] = useState(false)
   const [selectedDeliveryMethod, setSelectedDeliveryMethod] = useState(
@@ -55,7 +30,21 @@ export default function Example() {
   )
   const dispatch = useAppDispatch()
   const getProduct = useAppSelector((state) => state.cart)
-  console.log('123123', getProduct)
+  // const formik = useFormik({
+  //   initialValues: {
+  //     firstName: '',
+  //     lastName: '',
+  //     email: '',
+  //     phone: '',
+  //     country: 'United States',
+  //     city: '',
+  //     postalCode: '',
+  //     address: '',
+  //     floor:'',
+  //     apartment: '',
+  //     cartItems: cart
+  //   },
+  //   onSubmit:value
 
   return (
     <Layout>
@@ -507,6 +496,9 @@ export default function Example() {
 
                             <div className="ml-4 flow-root flex-shrink-0">
                               <button
+                                onClick={() => {
+                                  dispatch(removeItem(product.id))
+                                }}
                                 type="button"
                                 className="-m-2.5 flex items-center justify-center bg-white p-2.5 text-gray-400 hover:text-gray-500"
                               >
@@ -521,7 +513,7 @@ export default function Example() {
 
                           <div className="flex flex-1 items-end justify-between pt-2">
                             <p className="mt-1 text-sm font-medium text-gray-900">
-                              {product.price}
+                              ${+product.price * product.quantity}
                             </p>
 
                             <div className="ml-4">
@@ -529,9 +521,13 @@ export default function Example() {
                                 Quantity
                               </label>
                               <Dropdown
-                              
                                 onChange={(value) => {
-                                  console.log('hello world' + value)
+                                  dispatch(
+                                    addItemsToCart({
+                                      ...product,
+                                      quantity: +value,
+                                    })
+                                  )
                                 }}
                                 values={Array.from(
                                   Array(product.availableQty),
@@ -588,3 +584,4 @@ export default function Example() {
     </Layout>
   )
 }
+

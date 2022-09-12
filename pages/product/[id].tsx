@@ -113,13 +113,11 @@ export default function ProductPage({ product }: { product: Product }) {
       imageSrc: product.imageSrc,
       imageAlt: product.imageAlt,
       categories: product.categories,
-      // ...product,
       quantity:1,
     }
     dispatch(addItemsToCart(productInfo))
   }
-  console.log(addProductHandler())
-
+  
   return (
     <Layout>
       <main className="pt-10 sm:pt-8 md:pt-0">

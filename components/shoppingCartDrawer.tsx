@@ -3,7 +3,6 @@ import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { Fragment, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from 'redux/hooks'
-import { CartItem, Product } from 'types'
 import Dropdown from './dropdown'
 import { addItemsToCart, removeItem } from '../redux/cartSlice'
 import Link from 'next/link'
@@ -144,7 +143,7 @@ export default function ShoppingCartDrawer({ open, setOpen }: props) {
                     <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                       <div className="flex justify-between text-base font-medium text-gray-900">
                         <p>Subtotal</p>
-                        <p>{total}</p>
+                        <p>${total}</p>
                       </div>
                       <p className="mt-0.5 text-sm text-gray-500">
                         Shipping and taxes calculated at checkout.

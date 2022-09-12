@@ -2,6 +2,7 @@ import { Popover, Transition } from '@headlessui/react'
 import { MenuIcon, ShoppingBagIcon } from '@heroicons/react/outline'
 import { classNames } from 'lib'
 import { Fragment, useState } from 'react'
+import { useAppSelector } from 'redux/hooks'
 import Drawer from './drawer'
 import ShoppingCartDrawer from './shoppingCartDrawer'
 const navigation = {
@@ -85,6 +86,7 @@ const navigation = {
 function Header() {
   const [open, setOpen] = useState(false)
   const [openShoppingCart, setOpenShoppingCart] = useState(false)
+  const product = useAppSelector((state) => state.cart);
 
   return (
     <>
@@ -251,7 +253,7 @@ function Header() {
                           aria-hidden="true"
                         />
                         <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                          0
+                          {product.length}
                         </span>
                         <span className="sr-only">items in cart, view bag</span>
                       </a>

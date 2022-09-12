@@ -51,3 +51,17 @@ export type SizesType = {
   name: string
   inStock: boolean
 }
+
+export type Order = {
+  firstName: string
+  lastName: string
+  email: string
+  phone: string
+  country: string
+  city: string
+  address: string
+  apartment: string
+  postalCode: string
+  cartItems: CartItem[]
+}
+
