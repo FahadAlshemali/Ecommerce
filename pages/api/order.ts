@@ -20,7 +20,7 @@ export default async function handler(
       address,
       floor,
       apartment,
-      orderItems,
+      cartItems,
     } = req.body
     const doc = new GoogleSpreadsheet(process.env.SHEET_ID)
     const credentials = JSON.parse(
@@ -49,12 +49,12 @@ export default async function handler(
     })
     const orderLineSheet = doc.sheetsByTitle['orderLine']
 
-    for (let i = 0; i < orderItems.length; i++) {
+    for (let i = 0; i < cartItems.length; i++) {
       await orderLineSheet.addRow({
         id: uuid(),
         orderId,
-        productId: orderItems[i].productId,
-        quantity: orderItems[i].Qty,
+        productId: cartItems[i].id,
+        quantity: cartItems[i].quantity,
       })
     }
     res.send({ message: 'Order is created' })

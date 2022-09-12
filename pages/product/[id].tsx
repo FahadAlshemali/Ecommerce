@@ -108,16 +108,16 @@ export default function ProductPage({ product }: { product: Product }) {
       href: '',
       color: product.color,
       price: +product.price,
-       description:'',
+      description: '',
       availableQty: +product.availableQty,
       imageSrc: product.imageSrc,
       imageAlt: product.imageAlt,
       categories: product.categories,
-      quantity:1,
+      quantity: 1,
     }
     dispatch(addItemsToCart(productInfo))
   }
-  
+
   return (
     <Layout>
       <main className="pt-10 sm:pt-8 md:pt-0">
@@ -190,15 +190,12 @@ export default function ProductPage({ product }: { product: Product }) {
               </div>
             </div>
 
-            <form className="mt-10">
-              <button
-                onClick={() => addProductHandler()}
-                type="submit"
-                className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
-              >
-                Add to bag
-              </button>
-            </form>
+            <button
+              onClick={() => addProductHandler()}
+              className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 py-3 px-8 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
+            >
+              Add to bag
+            </button>
           </div>
 
           <div className="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pt-6 lg:pb-16 lg:pr-8">
