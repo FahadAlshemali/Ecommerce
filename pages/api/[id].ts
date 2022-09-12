@@ -6,16 +6,15 @@ export default async function handler(
 ) {
   extractSheets(
     {
-    
-      spreadsheetKey: process.env.SHEETS_ID,
+      spreadsheetKey: process.env.SHEET_ID,
 
       credentials: require('../../credentials.json'),
 
       sheetsToExtract: ['Product'],
     },
     function (err: any, data: any) {
-        const product = data.Product.find((item:any)=> item.id == req.query.id)
-        console.log(product)
+      const product = data.Product.find((item: any) => item.id == req.query.id)
+      console.log(product)
       res.send(product)
     }
   )

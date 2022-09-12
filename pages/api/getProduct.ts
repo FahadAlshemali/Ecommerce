@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   extractSheets(
     {
-      spreadsheetKey: process.env.SHEETS_ID,
+      spreadsheetKey: process.env.SHEET_ID,
 
       credentials: require('../../credentials.json'),
 

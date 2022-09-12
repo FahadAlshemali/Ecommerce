@@ -18,7 +18,7 @@ export default async function handler(
       const client = await auth.getClient()
 
       const googleSheets = google.sheets({ version: 'v4', auth: client })
-      const spreadsheetId = process.env.SHEETS_ID
+      const spreadsheetId = process.env.SHEET_ID
 
       const metaData = await googleSheets.spreadsheets.get({
         auth,
