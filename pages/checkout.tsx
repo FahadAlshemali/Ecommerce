@@ -35,7 +35,7 @@ export default function Example() {
       firstName: '',
       lastName: '',
       email: '',
-      company:'',
+      company: '',
       phone: '',
       country: 'United States',
       city: '',
@@ -47,9 +47,9 @@ export default function Example() {
     onSubmit: (values) => {
       let order = { ...values, cartItems: getProduct }
       addOrder(order)
+      formik.resetForm()
       console.log(order)
     },
-    
   })
 
   return (
@@ -75,11 +75,11 @@ export default function Example() {
                     </label>
                     <div className="mt-1">
                       <input
-                       id="email"
-                       name="email"
-                       type="email"
-                       onChange={formik.handleChange}
-                       value={formik.values.email}
+                        id="email"
+                        name="email"
+                        type="email"
+                        onChange={formik.handleChange}
+                        value={formik.values.email}
                         autoComplete="email"
                         className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                       />
@@ -102,11 +102,11 @@ export default function Example() {
                       </label>
                       <div className="mt-1">
                         <input
-                         id="firstName"
-                         name="firstName"
-                         type="text"
-                         onChange={formik.handleChange}
-                         value={formik.values.firstName}
+                          id="firstName"
+                          name="firstName"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.firstName}
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                       </div>
@@ -141,11 +141,11 @@ export default function Example() {
                       </label>
                       <div className="mt-1">
                         <input
-                         id="company"
-                         name="company"
-                         type="text"
-                         onChange={formik.handleChange}
-                         value={formik.values.company}
+                          id="company"
+                          name="company"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.company}
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                       </div>
@@ -160,11 +160,11 @@ export default function Example() {
                       </label>
                       <div className="mt-1">
                         <input
-                         id="address"
-                         name="address"
-                         type="text"
-                         onChange={formik.handleChange}
-                         value={formik.values.address}
+                          id="address"
+                          name="address"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.address}
                           autoComplete="street-address"
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -180,11 +180,11 @@ export default function Example() {
                       </label>
                       <div className="mt-1">
                         <input
-                         id="apartment"
-                         name="apartment"
-                         type="text"
-                         onChange={formik.handleChange}
-                         value={formik.values.apartment}
+                          id="apartment"
+                          name="apartment"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.apartment}
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
                       </div>
@@ -199,11 +199,11 @@ export default function Example() {
                       </label>
                       <div className="mt-1">
                         <input
-                            id="city"
-                            name="city"
-                            type="text"
-                            onChange={formik.handleChange}
-                            value={formik.values.city}
+                          id="city"
+                          name="city"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.city}
                           autoComplete="address-level2"
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -219,10 +219,10 @@ export default function Example() {
                       </label>
                       <div className="mt-1">
                         <select
-                         id="country"
-                         name="country"
-                         onChange={formik.handleChange}
-                         value={formik.values.country}
+                          id="country"
+                          name="country"
+                          onChange={formik.handleChange}
+                          value={formik.values.country}
                           autoComplete="country-name"
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         >
@@ -260,11 +260,11 @@ export default function Example() {
                       </label>
                       <div className="mt-1">
                         <input
-                         id="postalCode"
-                         name="postalCode"
-                         type="text"
-                         onChange={formik.handleChange}
-                         value={formik.values.postalCode}
+                          id="postalCode"
+                          name="postalCode"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.postalCode}
                           autoComplete="postal-code"
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -280,11 +280,11 @@ export default function Example() {
                       </label>
                       <div className="mt-1">
                         <input
-                           id="phone"
-                           name="phone"
-                           type="text"
-                           onChange={formik.handleChange}
-                           value={formik.values.phone}
+                          id="phone"
+                          name="phone"
+                          type="text"
+                          onChange={formik.handleChange}
+                          value={formik.values.phone}
                           autoComplete="tel"
                           className="block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                         />
@@ -594,9 +594,10 @@ export default function Example() {
 
                   <div className="border-t border-gray-200 py-6 px-4 sm:px-6">
                     <button
-                       onClick={(e)=>{
+                      onClick={(e) => {
                         e.preventDefault()
-                        formik.handleSubmit()}}
+                        formik.handleSubmit()
+                      }}
                       className="w-full rounded-md border border-transparent bg-indigo-600 py-3 px-4 text-base font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-gray-50"
                     >
                       Confirm order
